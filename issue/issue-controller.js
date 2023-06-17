@@ -7,10 +7,8 @@ exports.postIssue = async (req, res) => {
       throw new Error("required field(s) missing");
 
     const newIssue = await Issue.create({ ...req.body, project: project });
-    console.log(newIssue);
     res.json(newIssue);
   } catch (err) {
-    console.log(err);
     res.json({ error: err.message });
   }
 };
@@ -25,7 +23,6 @@ exports.getIssues = async (req, res) => {
 
     res.json(issues);
   } catch (err) {
-    // console.log(err);
     res.json({ error: err.message });
   }
 };
@@ -52,7 +49,6 @@ exports.putIssue = async (req, res) => {
     );
 
     Object.keys(update).forEach((item) => {
-      console.log(item);
       if (!updatedIssue[item]) throw new Error("could not update");
     });
 
@@ -74,7 +70,6 @@ exports.deleteAllIssues = async (req, res) => {
 
     res.json(issues);
   } catch (err) {
-    // console.log(err);
     res.json({ error: err.message });
   }
 };
@@ -87,8 +82,6 @@ exports.deleteIssue = async (req, res) => {
     if (!_id || _id === "") throw new Error();
 
     const deletedIssue = await Issue.findByIdAndDelete(_id);
-
-    console.log(deletedIssue);
 
     if (!deletedIssue) throw new Error("could not delete");
 
