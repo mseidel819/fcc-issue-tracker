@@ -183,19 +183,37 @@ suite("Functional Tests", function () {
       });
   });
   // Delete an issue: DELETE request to /api/issues/{project}
-  //   test("Delete an issue: DELETE request to /api/issues/{project}", (done) => {
-  //     chai
-  //       .request(server)
-  //       .delete("/api/issues/apitest")
-  //       .send({
-  //         _id: "648e150f46fb1ab4bec481f8",
-  //       })
-  //       .end((err, res) => {
-  //         assert.equal(res.body.result, "successfully deleted");
-  //         assert.equal(res.body._id, "648e150f46fb1ab4bec481f8");
-  //         done();
-  //       });
-  //   });
+  test("Delete an issue: DELETE request to /api/issues/{project}", (done) => {
+    const document = {
+      issue_title: "Title",
+      issue_text: "text",
+      created_by: "Functional Test - Every field filled in",
+      assigned_to: "Chai and Mocha",
+      status_text: "In QA",
+    };
+
+    chai
+      .request(server)
+      .post("/api/issues/apitest")
+      .send(document)
+      .end((err, res) => {
+        //   expect(res.body).to.have.property("_id");
+
+        const documentId = res.body._id;
+
+        chai
+          .request(server)
+          .delete("/api/issues/apitest")
+          .send({
+            _id: documentId,
+          })
+          .end((err, res) => {
+            assert.equal(res.body.result, "successfully deleted");
+            assert.equal(res.body._id, documentId);
+            done();
+          });
+      });
+  });
   // Delete an issue with an invalid _id: DELETE request to /api/issues/{project}
   test("Delete an issue with an invalid _id: DELETE request to /api/issues/{project}", (done) => {
     chai
