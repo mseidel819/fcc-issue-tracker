@@ -35,6 +35,10 @@ const issueDataScheme = new mongoose.Schema({
     required: false,
     default: "",
   },
+  project: {
+    type: String,
+    required: true,
+  },
 });
 
 const Issue = mongoose.model("issue", issueDataScheme);

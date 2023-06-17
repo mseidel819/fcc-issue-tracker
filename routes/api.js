@@ -1,5 +1,10 @@
 "use strict";
-const { postIssue, getIssues } = require("../issue/issue-controller");
+const {
+  postIssue,
+  getIssues,
+  deleteAllIssues,
+  putIssue,
+} = require("../issue/issue-controller");
 
 module.exports = function (app) {
   app
@@ -9,10 +14,8 @@ module.exports = function (app) {
 
     .post(postIssue)
 
-    .put(function (req, res) {
-      let project = req.params.project;
-    })
-
+    .put(putIssue)
+    // .delete(deleteAllIssues);
     .delete(function (req, res) {
       let project = req.params.project;
     });
