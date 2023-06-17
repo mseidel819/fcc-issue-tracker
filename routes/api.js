@@ -4,6 +4,7 @@ const {
   getIssues,
   deleteAllIssues,
   putIssue,
+  deleteIssue,
 } = require("../issue/issue-controller");
 
 module.exports = function (app) {
@@ -16,7 +17,5 @@ module.exports = function (app) {
 
     .put(putIssue)
     // .delete(deleteAllIssues);
-    .delete(function (req, res) {
-      let project = req.params.project;
-    });
+    .delete(deleteIssue);
 };

@@ -78,3 +78,26 @@ exports.deleteAllIssues = async (req, res) => {
     res.json({ error: err.message });
   }
 };
+
+exports.deleteIssue = async (req, res) => {
+  const { _id } = req.body;
+  try {
+    let project = req.params.project;
+
+    if (!_id || _id === "") throw new Error();
+
+    const deletedIssue = await Issue.findByIdAndDelete(_id);
+
+    console.log(deletedIssue);
+
+    if (!deletedIssue) throw new Error("could not delete");
+
+    res.json({ result: "successfully deleted", _id: _id });
+  } catch (err) {
+    if (!_id) {
+      res.json({ error: "missing _id" });
+    } else {
+      res.json({ error: "could not delete", _id: _id });
+    }
+  }
+};
